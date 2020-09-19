@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPasswordMail;
 use App\User;
 use App\Utilities\UserHelper;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        if (!empty($request->dev)){
+            Mail::send(new ResetPasswordMail());
+            dd("Mail Sent");
+        }
         $validation_fields  =   [
             'email'        => 'required|string',
             'password'     => 'required|string',
