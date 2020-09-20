@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6c02e0be-5a74-4c19-995f-1b733009c5ca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Mail/ResetPasswordMail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/ResetPasswordMail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/reset_password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/reset_password.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_070335_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_070335_create_orders_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +163,7 @@
       <workItem from="1600496511658" duration="3833000" />
       <workItem from="1600505724569" duration="3210000" />
       <workItem from="1600529625126" duration="1445000" />
-      <workItem from="1600581119231" duration="4343000" />
+      <workItem from="1600581119231" duration="5866000" />
     </task>
     <servers />
   </component>

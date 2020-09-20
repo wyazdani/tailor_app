@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('user_id')->default(0);
             $table->bigInteger('tailor_id')->default(0);
             $table->bigInteger('size_id')->default(0);
+            $table->string('image_url')->nullable();
+            $table->text('comments')->nullable();
             $table->enum('order_status',['pending','processing','completed']);
             $table->timestamps();
         });
