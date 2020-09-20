@@ -7,6 +7,7 @@ use App\Mail\ResetPasswordMail;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
@@ -35,16 +36,16 @@ class ResetPasswordController extends Controller
             ];
             $us    =   $user;
             $us->update($data);
-            $this->dispatch(new ResetPasswordMail($us));
+            Mail::send(new ResetPasswordMail($us));
             return response()->json([
                 'status'     =>  true,
-                'messages'   =>  __('messages.code_send_to_email')
+                'messages'   =>  'Reset password code has been sent to your email'
             ], 200);
         }
         else{
             return response()->json([
                 'status'     =>  false,
-                'messages'   =>  __('messages.email_not_found')
+                'messages'   =>  'Email not found'
             ], 200);
         }
     }
@@ -54,12 +55,9 @@ class ResetPasswordController extends Controller
         $validation_fields  =   [
             'email'        => 'required|email',
             'code'         => 'required',
-            'password'      => ['required', 'string', 'min:6', 'confirmed','regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,120}$/'],
+            'password'     => 'required|confirmed|string|min:6|max:90',
         ];
-        $customMessages = [
-            'regex' => __('messages.password_format')
-        ];
-        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields,$customMessages);
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
         if($validator->fails()) {
             $messages   =   [];
             foreach ($validator->messages()->getMessages() as $key =>   $message){
@@ -83,13 +81,13 @@ class ResetPasswordController extends Controller
             $user->update($data);
             return response()->json([
                 'status'     =>  true,
-                'messages'   =>  __('messages.password_changed_successfully')
+                'messages'   =>  'Password changed successfully'
             ], 200);
         }
         else{
             return response()->json([
                 'status'     =>  false,
-                'messages'   =>  __('messages.code_incorrect')
+                'messages'   =>  'Please enter valid code'
             ], 200);
         }
     }

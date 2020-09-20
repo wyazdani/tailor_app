@@ -7,7 +7,9 @@
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ResetPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Mail/ResetPasswordMail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/ResetPasswordMail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/reset_password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/reset_password.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +168,7 @@
       <workItem from="1600496511658" duration="3833000" />
       <workItem from="1600505724569" duration="3210000" />
       <workItem from="1600529625126" duration="1445000" />
-      <workItem from="1600581119231" duration="1170000" />
+      <workItem from="1600581119231" duration="4343000" />
     </task>
     <servers />
   </component>

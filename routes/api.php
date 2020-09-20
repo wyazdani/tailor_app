@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix'  =>  'v1'],function (){
     Route::post('login', 'Api\AuthController@login'); /*Login*/
     Route::post('register', 'Api\AuthController@register'); /*Register*/
+    Route::post('reset-password', 'Api\ResetPasswordController@create'); /*Reset Password Email*/
+    Route::post('reset-password-store', 'Api\ResetPasswordController@store'); /*Reset Password Store*/
 });
