@@ -15,10 +15,10 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        if (!empty($request->dev)){
+        /*if (!empty($request->dev)){
             Mail::send(new ResetPasswordMail());
             dd("Mail Sent");
-        }
+        }*/
         $validation_fields  =   [
             'email'        => 'required|string',
             'password'     => 'required|string',

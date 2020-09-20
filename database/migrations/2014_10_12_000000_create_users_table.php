@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->enum('role',['admin','manager','customer','tailor'])->default('customer');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('forget_password')->nullable();
+            $table->string('forget_code')->nullable();
             $table->string('confirmation_code')->nullable();
             $table->boolean('confirmed')->default(true);
             $table->boolean('is_active')->default(true);
