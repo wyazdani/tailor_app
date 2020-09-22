@@ -23,3 +23,6 @@ Route::group(['prefix'  =>  'v1'],function (){
     Route::post('reset-password', 'Api\ResetPasswordController@create'); /*Reset Password Email*/
     Route::post('reset-password-store', 'Api\ResetPasswordController@store'); /*Reset Password Store*/
 });
+Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
+    Route::post('customers', 'Api\UserController@customers'); /*Customers Listing*/
+});
