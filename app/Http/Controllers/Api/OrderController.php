@@ -160,4 +160,46 @@ class OrderController extends Controller
         $data_user['messages']  =   'Order Placed Successfully';
         return response()->json($data_user, 200);
     }
+    public function edit(Request $request)
+    {
+        $validation_fields  =   [
+            'order_id'         => 'required|exists:orders,id'
+        ];
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
+        if($validator->fails()) {
+            $messages   =   [];
+            foreach ($validator->messages()->getMessages() as $key =>   $message){
+                $messages[]    =
+                    $message[0];
+            }
+            $messages =   implode(" ",$messages);
+            return response()->json([
+                'status'     =>  false,
+                'messages'   =>  $messages
+            ], 200);
+        }
+
+        $order  =   Order::from(get_table_name(Order::class).' as o')
+            ->join(get_table_name(User::class).' as u','u.id','o.user_id')
+            ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
+            ->where('o.id',$request->order_id)
+            ->select('o.id as order_id','u.name as customer_name','t.name as tailor_name','t.id as tailor_id','o.order_status')
+            ->first();
+
+        $tailors    =   User::where('role','tailor')->select('id as tailor_id','name as tailor_name')->get();
+
+
+        $data   =   $order->toArray();
+        $data['tailor_id']   =   $order->tailor_id?$order->tailor_id:0;
+        $data['tailor_name']   =   $order->tailor_name?$order->tailor_name:'';
+        $data['status']   =   true;
+        $data['messages']   =   'Order edit';
+        if (!empty($tailors)){
+            $data['tailors']    = $tailors->toArray();
+        }else{
+            $data['tailors']    =   [];
+        }
+        return response()->json($data,200);
+    }
+
 }
