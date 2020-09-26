@@ -17,8 +17,8 @@ class SizeController extends Controller
         if (!empty($sizes)){
             foreach ($sizes as $size)
             {
-                $data['sizes']  =   [
-                    'size_name'        => $size->size_name,
+                $data['sizes'][]  =   [
+                    'size_name'        => $size->name,
                     'gender'        => $size->gender,
                     'shoulder_to_seam'        => $size->shoulder_to_seam,
                     'shoulder_to_hips'        => $size->shoulder_to_hips,
@@ -51,6 +51,8 @@ class SizeController extends Controller
             $data['sizes'] =   [];
             $data['links'] = new \stdClass();
         }
-
+        $data['status']  =   true;
+        $data['messages']  =   'Sizes Listing';
+        return response()->json($data, 200);
     }
 }

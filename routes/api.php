@@ -27,4 +27,5 @@ Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
     Route::post('users', 'Api\UserController@users'); /*Users Listing*/
     Route::post('order-store', 'Api\OrderController@store'); /*Order Store*/
     Route::post('orders', 'Api\OrderController@index'); /*Orders Listing*/
+    Route::post('my-sizes', 'Api\SizeController@index'); /*Sizes Listing*/
 });
