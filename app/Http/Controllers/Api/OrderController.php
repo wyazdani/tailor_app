@@ -201,5 +201,25 @@ class OrderController extends Controller
         }
         return response()->json($data,200);
     }
+    public function update(Request $request)
+    {
+        $validation_fields  =   [
+            'order_id'         => 'required|exists:orders,id',
+            'tailor_id'    => 'required',
+        ];
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
+        if($validator->fails()) {
+            $messages   =   [];
+            foreach ($validator->messages()->getMessages() as $key =>   $message){
+                $messages[]    =
+                    $message[0];
+            }
+            $messages =   implode(" ",$messages);
+            return response()->json([
+                'status'     =>  false,
+                'messages'   =>  $messages
+            ], 200);
+        }
+    }
 
 }
