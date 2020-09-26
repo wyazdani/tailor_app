@@ -25,4 +25,5 @@ Route::group(['prefix'  =>  'v1'],function (){
 });
 Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
     Route::post('customers', 'Api\UserController@customers'); /*Customers Listing*/
+    Route::post('order-store', 'Api\OrderController@store'); /*Order Store*/
 });

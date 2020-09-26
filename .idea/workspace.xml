@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c02e0be-5a74-4c19-995f-1b733009c5ca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Traits/UploadImage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Utilities/UserHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Utilities/UserHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +136,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -143,6 +145,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\laragon\www\tailor_app\app" />
       <recent name="F:\laragon\www\tailor_app\resources\views" />
     </key>
   </component>
@@ -166,7 +169,9 @@
       <workItem from="1600581119231" duration="6398000" />
       <workItem from="1600666438487" duration="55000" />
       <workItem from="1600667350803" duration="7000" />
-      <workItem from="1600783644168" duration="774000" />
+      <workItem from="1600783644168" duration="1002000" />
+      <workItem from="1600942279045" duration="17000" />
+      <workItem from="1601100324106" duration="5254000" />
     </task>
     <servers />
   </component>
@@ -174,10 +179,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="259" y="9" key="#SSH_Configurations" timestamp="1600497200400">
+    <state x="259" y="9" key="#SSH_Configurations" timestamp="1601100414696">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="259" y="9" key="#SSH_Configurations/0.0.1366.728@0.0.1366.728" timestamp="1600497200400" />
+    <state x="259" y="9" key="#SSH_Configurations/0.0.1366.728@0.0.1366.728" timestamp="1601100414696" />
     <state x="413" y="119" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600582176972">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -190,10 +195,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="477" y="87" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1600506501715" />
-    <state x="184" y="9" key="SettingsEditor" timestamp="1600498275315">
+    <state x="184" y="9" key="SettingsEditor" timestamp="1601100547820">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1600498275315" />
+    <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1601100547820" />
     <state x="568" y="94" key="ftp.server.browser" timestamp="1600498270829">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
