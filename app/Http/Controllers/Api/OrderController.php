@@ -107,7 +107,7 @@ class OrderController extends Controller
              'order_status' =>  'pending',
         ]);
 
-        /*$this->dispatch(new OrderStatusJob($user,$order));*/
+        dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
         $data_user['status']  =   true;
         $data_user['messages']  =   'Order Placed Successfully';
         return response()->json($data_user, 200);

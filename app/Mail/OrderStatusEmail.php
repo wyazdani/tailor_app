@@ -12,6 +12,8 @@ class OrderStatusEmail extends Mailable
     use Queueable, SerializesModels;
     public $order;
     public $user;
+    public $title;
+    public $view;
     /**
      * Create a new message instance.
      *
@@ -21,6 +23,10 @@ class OrderStatusEmail extends Mailable
     {
         $this->user =   $user;
         $this->order =   $order;
+        if ($order->order_status=='pending'){
+            $this->title  =   'Order placed';
+            $this->view  =   'mail.order_placed';
+        }
     }
 
     /**
@@ -30,6 +36,9 @@ class OrderStatusEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+
+        return $this->to('waqaryazdani2@gmail.com')
+            ->subject($this->title)
+            ->view($this->view);
     }
 }
