@@ -18,21 +18,21 @@ class OrderController extends Controller
             'image_url'        => 'required|image|mimes:jpeg,png|max:8000',
             'size_name'        => 'required|max:255',
             'gender'        => 'required|in:male,female',
-            'shoulder_to_seam'        => 'required|numeric|max:11',
-            'shoulder_to_hips'        => 'required|numeric|max:11',
-            'shoulder_to_floor'        => 'required|numeric|max:11',
-            'arm_length'        => 'required|numeric|max:11',
-            'bicep'        => 'required|numeric|max:11',
-            'wrist'        => 'required|numeric|max:11',
-            'waist'        => 'required|numeric|max:11',
-            'lower_waist'        => 'required|numeric|max:11',
-            'waist_to_floor'        => 'required|numeric|max:11',
-            'hips'        => 'required|numeric|max:11',
-            'max_thigh'        => 'required|numeric|max:11',
-            'calf'        => 'required|numeric|max:11',
-            'ankle'        => 'required|numeric|max:11',
-            'chest'        => 'required|numeric|max:11',
-            'navel_to_floor'        => 'required|numeric|max:11',
+            'shoulder_to_seam'        => 'required|numeric',
+            'shoulder_to_hips'        => 'required|numeric',
+            'shoulder_to_floor'        => 'required|numeric',
+            'arm_length'        => 'required|numeric',
+            'bicep'        => 'required|numeric',
+            'wrist'        => 'required|numeric',
+            'waist'        => 'required|numeric',
+            'lower_waist'        => 'required|numeric',
+            'waist_to_floor'        => 'required|numeric',
+            'hips'        => 'required|numeric',
+            'max_thigh'        => 'required|numeric',
+            'calf'        => 'required|numeric',
+            'ankle'        => 'required|numeric',
+            'chest'        => 'required|numeric',
+            'navel_to_floor'        => 'required|numeric',
             'size_id'        => 'required_if:size_type,preset',
             'size_type'        => 'required|in:custom,preset',
         ];
@@ -53,7 +53,7 @@ class OrderController extends Controller
         $user   =   $request->user();
         $image  =   $this->uploadImage($request->image_url);
 
-        if ($request->size_id){
+        if ($request->size_id && $request->size_type=='preset'){
             $size   =   Size::find($request->size_id);
             $size->update([
                 'name'        => $request->size_name,
