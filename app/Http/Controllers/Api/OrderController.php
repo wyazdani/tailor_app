@@ -205,7 +205,7 @@ class OrderController extends Controller
     {
         $validation_fields  =   [
             'order_id'         => 'required|exists:orders,id',
-            'tailor_id'    => 'required',
+            'tailor_id'    => 'required|exists:users,id',
         ];
         $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
         if($validator->fails()) {
@@ -220,6 +220,20 @@ class OrderController extends Controller
                 'messages'   =>  $messages
             ], 200);
         }
+
+        $order  =   Order::find($request->order_id);
+
+        $order->update([
+            'tailor_id' =>  $request->tailor_id,
+            'order_status'  =>  'processing'
+        ]);
+
+        $user   =   User::find($order->user_id);
+        dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
+        return response()->json([
+            'status'     =>  true,
+            'messages'   =>  'Order updated Successfully'
+        ], 200);
     }
 
 }

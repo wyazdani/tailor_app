@@ -14,6 +14,7 @@ class OrderStatusEmail extends Mailable
     public $user;
     public $title;
     public $view;
+    public $message;
     /**
      * Create a new message instance.
      *
@@ -26,7 +27,16 @@ class OrderStatusEmail extends Mailable
         if ($order->order_status=='pending'){
             $this->title  =   'Order placed';
             $this->view  =   'mail.order_placed';
+        }elseif($order->order_status=='processing'){
+            $this->title  =   'Tailor Assigned';
+            $this->view  =   'mail.order_tailor_assigned';
+            $this->message  =   'Your Order No '.$order->order_no.' has been assigned a Tailor';
+        }elseif($order->order_status=='completed'){
+            $this->title  =   'Order Completed';
+            $this->view  =   'mail.order_updated';
+            $this->message  =   'Your Order No '.$order->order_no.' has been completed successfully';
         }
+
     }
 
     /**

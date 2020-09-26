@@ -5,7 +5,7 @@
                 Hi {!! $user->name !!},
             </dt>
             <dt style="font-weight: normal;width: 80%;text-align: left;padding: 5px 15px; color: #000000">
-                Your Order No {!! $order->order_no !!} has been placed successfully
+                {!! $message !!}
             </dt>
             <dt style="font-weight: normal;width: 80%;text-align: left;padding:0 15px; color: #000000">
                 Thanks,
