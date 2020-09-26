@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class InformTailorEmail extends Mailable
+{
+    use Queueable, SerializesModels;
+    public $order;
+    public $user;
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($user,$order)
+    {
+        $this->user =   $user;
+        $this->order =   $order;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->to('waqaryazdani2@gmail.com')
+            ->subject('New Order Received')
+            ->view('mail.inform_tailor');
+    }
+}

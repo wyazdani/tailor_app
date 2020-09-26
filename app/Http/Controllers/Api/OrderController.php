@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\InformTailorJob;
 use App\Jobs\OrderStatusJob;
 use App\Models\Order;
 use App\Models\Size;
@@ -229,7 +230,9 @@ class OrderController extends Controller
         ]);
 
         $user   =   User::find($order->user_id);
+        $tailor   =   User::find($order->tailor_id);
         dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
+        dispatch(new InformTailorJob($tailor,$order))->delay(now()->addSeconds(30));
         return response()->json([
             'status'     =>  true,
             'messages'   =>  'Order updated Successfully'

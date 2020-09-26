@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c02e0be-5a74-4c19-995f-1b733009c5ca" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/mail/order_updated.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/mail/inform_tailor.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Mail/OrderStatusEmail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/OrderStatusEmail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Mail/ResetPasswordMail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/ResetPasswordMail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_placed.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_placed.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +170,7 @@
       <workItem from="1600667350803" duration="7000" />
       <workItem from="1600783644168" duration="1002000" />
       <workItem from="1600942279045" duration="17000" />
-      <workItem from="1601100324106" duration="13870000" />
+      <workItem from="1601100324106" duration="14619000" />
     </task>
     <servers />
   </component>
@@ -198,10 +194,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="477" y="87" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1600506501715" />
-    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1601122864718">
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1601123196991">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1601122864718" />
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1601123196991" />
     <state x="184" y="9" key="SettingsEditor" timestamp="1601100547820">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
