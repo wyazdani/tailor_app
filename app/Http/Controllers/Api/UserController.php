@@ -8,9 +8,25 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function customers(Request $request)
+    public function users(Request $request)
     {
-        $customers  =   User::where('role','customer')->paginate(20);
+        $validation_fields  =   [
+            'role'     => 'required|in:customer,tailor',
+        ];
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
+        if($validator->fails()) {
+            $messages   =   [];
+            foreach ($validator->messages()->getMessages() as $key =>   $message){
+                $messages[]    =
+                    $message[0];
+            }
+            $messages =   implode(" ",$messages);
+            return response()->json([
+                'status'     =>  false,
+                'messages'   =>  $messages
+            ], 200);
+        }
+        $customers  =   User::where('role',$request->role)->paginate(20);
 
         if (!empty($customers)){
             foreach ($customers as $customer)
@@ -22,7 +38,6 @@ class UserController extends Controller
                     'phone_number'   =>  $customer->phone_number?$customer->phone_number:'',
                     'address'   =>  $customer->address?$customer->address:'',
                 ];
-
             }
             $data['links']['current_page'] = $customers->currentPage();
             $data['links']['first_page_url'] = $customers->url($customers->currentPage());

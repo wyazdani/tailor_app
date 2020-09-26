@@ -7,11 +7,59 @@ use App\Jobs\OrderStatusJob;
 use App\Models\Order;
 use App\Models\Size;
 use App\Traits\UploadImage;
+use App\User;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Psr7\str;
 
 class OrderController extends Controller
 {
     use UploadImage;
+
+    public function index(Request $request)
+    {
+        $user   =   $request->user();
+        $orders =   Order::from(get_table_name(Order::class).' as o')
+            ->join(get_table_name(User::class).' as u','u.id','o.user_id')
+            ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
+            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at');
+        if($user->role=='customer'){
+            $orders =   $orders->where('u.id',$user->id);
+        }elseif($user->role=='tailor'){
+            $orders =   $orders->where('t.id',$user->id);
+        }
+
+        $orders =   $orders->paginate(20);
+        if (!empty($orders)){
+            foreach ($orders as $order)
+            {
+                $data['orders'][]   =   [
+                    'order_id'  =>    $order->order_id,
+                    'order_no'  =>    $order->order_no,
+                    'customer_name'  =>    $order->customer_name,
+                    'tailor_name'  =>    $order->tailor_name?$order->tailor_name:'Not Assigned Yet',
+                    'order_status'  =>    $order->order_status,
+                    'created_at'  =>    date('Y-m-d',strtotime($order->created_at)),
+                ];
+
+            }
+            $data['links']['current_page'] = $orders->currentPage();
+            $data['links']['first_page_url'] = $orders->url($orders->currentPage());
+            $data['links']['from'] = $orders->firstItem();
+            $data['links']['last_page'] = $orders->lastPage();
+            $data['links']['last_page_url'] = $orders->url($orders->lastPage());
+            $data['links']['next_page_url'] = $orders->nextPageUrl();
+            $data['links']['per_page'] = $orders->perPage();
+            $data['links']['prev_page_url'] = $orders->previousPageUrl();
+            $data['links']['to'] = $orders->lastItem();
+            $data['links']['total'] = $orders->total();
+        }else{
+            $data['orders'] =   [];
+            $data['links'] = new \stdClass();
+        }
+        $data['status']  =   true;
+        $data['messages']  =   'Orders Listing';
+        return response()->json($data, 200);
+    }
     public function store(Request $request)
     {
         $validation_fields  =   [
