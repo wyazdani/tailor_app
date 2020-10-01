@@ -9,6 +9,7 @@ use App\Utilities\UserHelper;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
@@ -87,7 +88,7 @@ class AuthController extends Controller
             'name'  =>  $request->name,
             'email'  =>  $request->email,
             'phone_number'  =>  $request->phone_number,
-            'password'  =>  $request->password,
+            'password'  =>  Hash::make($request->password),
             'role'  =>  $role,
             'address'   =>  '',
             'access_token'   =>  '',

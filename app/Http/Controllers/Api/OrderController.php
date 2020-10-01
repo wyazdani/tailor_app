@@ -21,8 +21,12 @@ class OrderController extends Controller
         $user   =   $request->user();
         $orders =   Order::from(get_table_name(Order::class).' as o')
             ->join(get_table_name(User::class).' as u','u.id','o.user_id')
+            ->join(get_table_name(Size::class).' as s','s.id','o.size_id')
             ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
-            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at');
+            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.image_url','u.phone_number','u.address','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
+                's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor'
+            )
+            ->orderBy('o.id','DESC');
         if($user->role=='customer'){
             $orders =   $orders->where('u.id',$user->id);
         }elseif($user->role=='tailor'){
@@ -37,9 +41,27 @@ class OrderController extends Controller
                     'order_id'  =>    $order->order_id,
                     'order_no'  =>    $order->order_no,
                     'customer_name'  =>    $order->customer_name,
+                    'customer_phone_number'  =>    $order->phone_number,
+                    'customer_address'  =>    $order->address,
                     'tailor_name'  =>    $order->tailor_name?$order->tailor_name:'Not Assigned Yet',
                     'order_status'  =>    $order->order_status,
                     'created_at'  =>    date('Y-m-d',strtotime($order->created_at)),
+                    'image_url'  =>    url($order->image_url),
+                    'shoulder_to_seam'  =>    $order->shoulder_to_seam,
+                    'shoulder_to_hips'  =>    $order->shoulder_to_hips,
+                    'shoulder_to_floor'  =>    $order->shoulder_to_floor,
+                    'arm_length'  =>    $order->arm_length,
+                    'bicep'  =>    $order->bicep,
+                    'wrist'  =>    $order->wrist,
+                    'waist'  =>    $order->waist,
+                    'lower_waist'  =>    $order->lower_waist,
+                    'waist_to_floor'  =>    $order->waist_to_floor,
+                    'hips'  =>    $order->hips,
+                    'max_thigh'  =>    $order->max_thigh,
+                    'calf'  =>    $order->calf,
+                    'ankle'  =>    $order->ankle,
+                    'chest'  =>    $order->chest,
+                    'navel_to_floor'  =>    $order->navel_to_floor,
                 ];
 
             }
@@ -236,6 +258,40 @@ class OrderController extends Controller
         return response()->json([
             'status'     =>  true,
             'messages'   =>  'Order updated Successfully'
+        ], 200);
+    }
+    public function order_status(Request $request)
+    {
+        $validation_fields  =   [
+            'order_status'         => 'required|in:completed',
+            'order_id'         => 'required|exists:orders,id'
+
+        ];
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
+        if($validator->fails()) {
+            $messages   =   [];
+            foreach ($validator->messages()->getMessages() as $key =>   $message){
+                $messages[]    =
+                    $message[0];
+            }
+            $messages =   implode(" ",$messages);
+            return response()->json([
+                'status'     =>  false,
+                'messages'   =>  $messages
+            ], 200);
+        }
+
+        $order  =   Order::find($request->order_id);
+
+        $order->update([
+            'order_status'  =>  'completed'
+        ]);
+
+        $user   =   User::find($order->user_id);
+        dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
+        return response()->json([
+            'status'     =>  true,
+            'messages'   =>  'Order status updated Successfully'
         ], 200);
     }
 

@@ -30,7 +30,7 @@ class InformTailorEmail extends Mailable
      */
     public function build()
     {
-        return $this->to('waqaryazdani2@gmail.com')
+        return $this->to($this->user->email)
             ->subject('New Order Received')
             ->view('mail.inform_tailor');
     }

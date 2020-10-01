@@ -30,11 +30,9 @@ class OrderStatusEmail extends Mailable
         }elseif($order->order_status=='processing'){
             $this->title  =   'Tailor Assigned';
             $this->view  =   'mail.order_tailor_assigned';
-            $this->message  =   'Your Order No '.$order->order_no.' has been assigned a Tailor';
         }elseif($order->order_status=='completed'){
             $this->title  =   'Order Completed';
-            $this->view  =   'mail.order_updated';
-            $this->message  =   'Your Order No '.$order->order_no.' has been completed successfully';
+            $this->view  =   'mail.order_completed';
         }
 
     }
@@ -47,7 +45,7 @@ class OrderStatusEmail extends Mailable
     public function build()
     {
 
-        return $this->to('waqaryazdani2@gmail.com')
+        return $this->to($this->user->email)
             ->subject($this->title)
             ->view($this->view);
     }
