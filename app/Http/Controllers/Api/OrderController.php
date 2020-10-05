@@ -23,8 +23,8 @@ class OrderController extends Controller
             ->join(get_table_name(User::class).' as u','u.id','o.user_id')
             ->join(get_table_name(Size::class).' as s','s.id','o.size_id')
             ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
-            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','u.phone_number','o.address','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
-                's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender'
+            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','u.phone_number','o.address','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
+                's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender','s.id as size_id'
             )
             ->orderBy('o.id','DESC');
         if($user->role=='customer'){
@@ -39,12 +39,14 @@ class OrderController extends Controller
             {
                 $data['orders'][]   =   [
                     'order_id'  =>    $order->order_id,
+                    'size_id'  =>    $order->size_id,
+                    'tailor_id'  =>    $order->tailor_id,
                     'order_no'  =>    $order->order_no,
                     'customer_name'  =>    $order->customer_name,
                     'customer_phone_number'  =>    $order->phone_number,
                     'customer_address'  =>    $order->address,
                     'tailor_name'  =>    $order->tailor_name?$order->tailor_name:'Not Assigned Yet',
-                    'tailor_id'  =>    $order->tailor_id,
+
                     'order_status'  =>    $order->order_status,
                     'created_at'  =>    date('Y-m-d',strtotime($order->created_at)),
                     'image_url'  =>    url($order->image_url),
@@ -65,6 +67,7 @@ class OrderController extends Controller
                     'ankle'  =>    $order->ankle,
                     'chest'  =>    $order->chest,
                     'navel_to_floor'  =>    $order->navel_to_floor,
+                    'comments'  =>    $order->comments,
                 ];
 
             }
@@ -89,7 +92,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validation_fields  =   [
-            'image_url'        => 'image|mimes:jpeg,png|max:8000',
+            'image_url'        => 'required|image|mimes:jpeg,png|max:8000',
             'address'        => 'required',
             'size_name'        => 'required|max:255',
             'gender'        => 'required|in:male,female',
@@ -238,6 +241,25 @@ class OrderController extends Controller
         $validation_fields  =   [
             'order_id'         => 'required|exists:orders,id',
             'tailor_id'    => 'required|exists:users,id',
+            'address'        => 'required',
+            'size_name'        => 'required|max:255',
+            'gender'        => 'required|in:male,female',
+            'shoulder_to_seam'        => 'required|numeric',
+            'shoulder_to_hips'        => 'required|numeric',
+            'shoulder_to_floor'        => 'required|numeric',
+            'arm_length'        => 'required|numeric',
+            'bicep'        => 'required|numeric',
+            'wrist'        => 'required|numeric',
+            'waist'        => 'required|numeric',
+            'lower_waist'        => 'required|numeric',
+            'waist_to_floor'        => 'required|numeric',
+            'hips'        => 'required|numeric',
+            'max_thigh'        => 'required|numeric',
+            'calf'        => 'required|numeric',
+            'ankle'        => 'required|numeric',
+            'chest'        => 'required|numeric',
+            'navel_to_floor'        => 'required|numeric',
+            'size_id'        => 'required',
         ];
         $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
         if($validator->fails()) {
@@ -257,9 +279,30 @@ class OrderController extends Controller
 
         $order->update([
             'tailor_id' =>  $request->tailor_id,
-            'order_status'  =>  'processing'
+            'order_status'  =>  'processing',
+            'address'  =>  $request->address,
+            'comments'  =>  $request->comments,
         ]);
-
+        $size   =   Size::find($request->size_id);
+        $size->update([
+            'name'        => $request->size_name,
+            'gender'        => $request->gender,
+            'shoulder_to_seam'        => $request->shoulder_to_seam,
+            'shoulder_to_hips'        => $request->shoulder_to_hips,
+            'shoulder_to_floor'        => $request->shoulder_to_floor,
+            'arm_length'        => $request->arm_length,
+            'bicep'        => $request->bicep,
+            'wrist'        => $request->wrist,
+            'waist'        => $request->waist,
+            'lower_waist'        => $request->lower_waist,
+            'waist_to_floor'        => $request->waist_to_floor,
+            'hips'        => $request->hips,
+            'max_thigh'        => $request->max_thigh,
+            'calf'        => $request->calf,
+            'ankle'        => $request->ankle,
+            'chest'        => $request->chest,
+            'navel_to_floor'        => $request->navel_to_floor,
+        ]);
         $user   =   User::find($order->user_id);
         $tailor   =   User::find($order->tailor_id);
         dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
