@@ -30,6 +30,7 @@ Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
     Route::post('order-edit', 'Api\OrderController@edit'); /*Edit Order*/
     Route::post('order-edit-store', 'Api\OrderController@update'); /*Update Order*/
     Route::post('order-status-update', 'Api\OrderController@order_status'); /*Order Status Update */
+    Route::post('order-completed', 'Api\OrderController@order_complete'); /*Order Status Complete */
     Route::post('my-sizes', 'Api\SizeController@index'); /*Sizes Listing*/
     Route::post('store-my-size', 'Api\SizeController@store'); /*Sizes Store*/
 });

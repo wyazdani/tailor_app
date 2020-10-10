@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c02e0be-5a74-4c19-995f-1b733009c5ca" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/mail/date_assigned.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Mail/OrderDeliveryDateAssignedEmail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/OrderDeliveryDateAssignedEmail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Mail/OrderStatusEmail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/OrderStatusEmail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_completed.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_completed.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +184,7 @@
       <workItem from="1601720898292" duration="5492000" />
       <workItem from="1601909889984" duration="1138000" />
       <workItem from="1601917208164" duration="225000" />
-      <workItem from="1602330028260" duration="2602000" />
+      <workItem from="1602330028260" duration="4306000" />
     </task>
     <servers />
   </component>

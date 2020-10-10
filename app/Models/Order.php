@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable =   ['order_no','user_id','tailor_id','size_id','comments','image_url','order_status','address','delivery_date'];
+    protected $fillable =   ['order_no','user_id','tailor_id','size_id','comments','image_url','order_status',
+        'address','delivery_date','tailor_image','tracking_number'];
 
     public function unique_code(){
         $unique_user    =  'ORD'.strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10));

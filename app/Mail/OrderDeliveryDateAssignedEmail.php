@@ -34,7 +34,7 @@ class OrderDeliveryDateAssignedEmail extends Mailable
      */
     public function build()
     {
-        return $this->to('wy@softwarealliance.dk')
+        return $this->to($this->user->email)
             ->subject($this->title)
             ->view($this->view);
     }

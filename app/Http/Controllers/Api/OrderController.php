@@ -24,7 +24,7 @@ class OrderController extends Controller
             ->join(get_table_name(User::class).' as u','u.id','o.user_id')
             ->join(get_table_name(Size::class).' as s','s.id','o.size_id')
             ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
-            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','o.delivery_date','u.phone_number','o.address','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
+            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','o.delivery_date','u.phone_number','o.address','o.tracking_number','o.tailor_image','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
                 's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender','s.id as size_id'
             )
             ->orderBy('o.id','DESC');
@@ -70,6 +70,8 @@ class OrderController extends Controller
                     'navel_to_floor'  =>    $order->navel_to_floor,
                     'comments'  =>    $order->comments,
                     'delivery_date'  =>    !empty($order->delivery_date)?date('M d Y',strtotime($order->delivery_date)):"",
+                    'tracking_number'  =>    !empty($order->tracking_number)?$order->tracking_number:"",
+                    'tailor_image'  =>    !empty($order->tailor_image)?url($order->tailor_image):"",
                 ];
 
             }
@@ -362,6 +364,46 @@ class OrderController extends Controller
         return response()->json([
             'status'     =>  true,
             'messages'   =>  'Order status updated Successfully'
+        ], 200);
+    }
+
+    public function order_complete(Request $request)
+    {
+        $validation_fields  =   [
+            'tailor_image'         => 'required|image|mimes:jpeg,png|max:8000',
+            'tracking_number'         => 'required|max:255',
+            'order_id'         => 'required|exists:orders,id'
+
+        ];
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
+        if($validator->fails()) {
+            $messages   =   [];
+            foreach ($validator->messages()->getMessages() as $key =>   $message){
+                $messages[]    =
+                    $message[0];
+            }
+            $messages =   implode(" ",$messages);
+            return response()->json([
+                'status'     =>  false,
+                'messages'   =>  $messages
+            ], 200);
+        }
+
+        $order  =   Order::find($request->order_id);
+
+        $image  =   $this->uploadImage($request->tailor_image);
+        $order->update([
+            'order_status'  =>  'completed',
+            'tailor_image'  =>  $image,
+            'tracking_number'  =>  $request->tracking_number,
+        ]);
+
+        $user   =   User::find($order->user_id);
+        dispatch(new OrderStatusJob($user,$order));
+
+        return response()->json([
+            'status'     =>  true,
+            'messages'   =>  'Order Completed Successfully'
         ], 200);
     }
 

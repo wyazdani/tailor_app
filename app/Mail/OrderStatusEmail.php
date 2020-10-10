@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,6 +13,7 @@ class OrderStatusEmail extends Mailable
     use Queueable, SerializesModels;
     public $order;
     public $user;
+    public $manager;
     public $title;
     public $view;
     public $message;
@@ -22,6 +24,7 @@ class OrderStatusEmail extends Mailable
      */
     public function __construct($user,$order)
     {
+        $this->manager  =   User::where('role','manager')->first();
         $this->user =   $user;
         $this->order =   $order;
         if ($order->order_status=='pending'){
@@ -46,6 +49,7 @@ class OrderStatusEmail extends Mailable
     {
 
         return $this->to($this->user->email)
+            ->cc([$this->manager->email])
             ->subject($this->title)
             ->view($this->view);
     }
