@@ -277,11 +277,17 @@ class OrderController extends Controller
 
         $order  =   Order::find($request->order_id);
 
+        $image  =   $order->image_url;
+        if ($request->image_url){
+            $this->deleteOne($order->image_url);
+            $image = $this->uploadImage($request->image_url);
+        }
         $order->update([
             'tailor_id' =>  $request->tailor_id,
             'order_status'  =>  'processing',
             'address'  =>  $request->address,
             'comments'  =>  $request->comments,
+            'image_url'  =>  $image,
         ]);
         $size   =   Size::find($request->size_id);
         $size->update([
