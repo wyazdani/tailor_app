@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\InformTailorJob;
+use App\Jobs\OrderDeliveryDateAssigned;
 use App\Jobs\OrderStatusJob;
 use App\Models\Order;
 use App\Models\Size;
@@ -23,7 +24,7 @@ class OrderController extends Controller
             ->join(get_table_name(User::class).' as u','u.id','o.user_id')
             ->join(get_table_name(Size::class).' as s','s.id','o.size_id')
             ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
-            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','u.phone_number','o.address','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
+            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','o.delivery_date','u.phone_number','o.address','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
                 's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender','s.id as size_id'
             )
             ->orderBy('o.id','DESC');
@@ -68,6 +69,7 @@ class OrderController extends Controller
                     'chest'  =>    $order->chest,
                     'navel_to_floor'  =>    $order->navel_to_floor,
                     'comments'  =>    $order->comments,
+                    'delivery_date'  =>    !empty($order->delivery_date)?date('M d Y',strtotime($order->delivery_date)):"",
                 ];
 
             }
@@ -321,7 +323,8 @@ class OrderController extends Controller
     public function order_status(Request $request)
     {
         $validation_fields  =   [
-            'order_status'         => 'required|in:completed',
+            'order_status'         => 'required|in:completed,started',
+            'delivery_date'         => 'required|date',
             'order_id'         => 'required|exists:orders,id'
 
         ];
@@ -341,12 +344,21 @@ class OrderController extends Controller
 
         $order  =   Order::find($request->order_id);
 
+        $order_status   =   $request->order_status;
         $order->update([
-            'order_status'  =>  'completed'
+            'order_status'  =>  $order_status,
+            'delivery_date'  =>  date('Y-m-d',strtotime($request->delivery_date)),
         ]);
 
         $user   =   User::find($order->user_id);
-        dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
+        $manager    =   User::where('role','manager')->first();
+        if ($order_status=='started'){
+            dispatch(new OrderDeliveryDateAssigned($user,$order));
+            dispatch(new OrderDeliveryDateAssigned($manager,$order));
+        }else{
+            dispatch(new OrderStatusJob($user,$order));
+        }
+
         return response()->json([
             'status'     =>  true,
             'messages'   =>  'Order status updated Successfully'
