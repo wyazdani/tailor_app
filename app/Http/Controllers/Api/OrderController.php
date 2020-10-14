@@ -24,7 +24,7 @@ class OrderController extends Controller
             ->join(get_table_name(User::class).' as u','u.id','o.user_id')
             ->join(get_table_name(Size::class).' as s','s.id','o.size_id')
             ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
-            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','o.delivery_date','u.phone_number','o.address','o.tracking_number','o.tailor_image','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
+            ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','o.delivery_date','u.phone_number','o.address','o.tracking_number','o.tailor_image','o.initial_remarks','o.complete_remarks','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
                 's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender','s.id as size_id'
             )
             ->orderBy('o.id','DESC');
@@ -72,6 +72,8 @@ class OrderController extends Controller
                     'delivery_date'  =>    !empty($order->delivery_date)?date('M d Y',strtotime($order->delivery_date)):"",
                     'tracking_number'  =>    !empty($order->tracking_number)?$order->tracking_number:"",
                     'tailor_image'  =>    !empty($order->tailor_image)?url($order->tailor_image):"",
+                    'initial_remarks'  =>    !empty($order->initial_remarks)?$order->initial_remarks:"",
+                    'complete_remarks'  =>    !empty($order->complete_remarks)?$order->complete_remarks:"",
                 ];
 
             }
@@ -350,6 +352,7 @@ class OrderController extends Controller
         $order->update([
             'order_status'  =>  $order_status,
             'delivery_date'  =>  date('Y-m-d',strtotime($request->delivery_date)),
+            'initial_remarks'  =>  !empty($request->initial_remarks)?$request->initial_remarks:'',
         ]);
 
         $user   =   User::find($order->user_id);
@@ -396,6 +399,7 @@ class OrderController extends Controller
             'order_status'  =>  'completed',
             'tailor_image'  =>  $image,
             'tracking_number'  =>  $request->tracking_number,
+            'complete_remarks'  =>  !empty($request->complete_remarks)?$request->complete_remarks:'',
         ]);
 
         $user   =   User::find($order->user_id);
