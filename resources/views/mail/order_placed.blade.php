@@ -12,7 +12,7 @@
             </dt>
 
             <dt style="font-weight: normal;width: 80%;text-align: left;padding:0 15px 20px; color: #000000">
-                Team Tailor
+                Team RoraProduction
             </dt>
         </td>
     </tr>

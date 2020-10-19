@@ -98,7 +98,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validation_fields  =   [
-            'image_url'        => 'required|image|mimes:jpeg,png|max:8000',
+            'image_url'        => 'required|image|mimes:jpeg,png|max:15000',
             'address'        => 'required',
             'size_name'        => 'required|max:255',
             'gender'        => 'required|in:male,female',
@@ -373,7 +373,7 @@ class OrderController extends Controller
     public function order_complete(Request $request)
     {
         $validation_fields  =   [
-            'tailor_image'         => 'required|image|mimes:jpeg,png|max:8000',
+            'tailor_image'         => 'required|image|mimes:jpeg,png|max:15000',
             'tracking_number'         => 'required|max:255',
             'order_id'         => 'required|exists:orders,id'
 

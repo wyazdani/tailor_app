@@ -15,7 +15,6 @@ class AddDateToOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('delivery_date')->after('comments')->nullable();
-            DB::statement("ALTER TABLE `orders` CHANGE `order_status` `order_status` ENUM('pending','processing','started','completed');");
         });
     }
 
@@ -28,7 +27,6 @@ class AddDateToOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('delivery_date');
-            DB::statement("ALTER TABLE `orders` CHANGE `order_status` `order_status` ENUM('pending','processing','completed');");
         });
     }
 }
