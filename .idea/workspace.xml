@@ -3,17 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6c02e0be-5a74-4c19-995f-1b733009c5ca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_070335_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_070335_create_orders_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_10_114307_add_date_to_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_10_114307_add_date_to_orders_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/date_assigned.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/date_assigned.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/inform_tailor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/inform_tailor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_completed.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_completed.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_placed.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_placed.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_updated.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_updated.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/reset_password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/reset_password.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/UserTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UserTableSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +184,8 @@
       <workItem from="1602652876597" duration="647000" />
       <workItem from="1602928842968" duration="684000" />
       <workItem from="1603082992336" duration="309000" />
-      <workItem from="1603118391826" duration="352000" />
+      <workItem from="1603118391826" duration="528000" />
+      <workItem from="1603171943516" duration="57000" />
     </task>
     <servers />
   </component>

@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
         $users  =   [
             [
                 'name'  =>  'manager',
-                'email' =>  'manager@tailor.com',
+                'email' =>  'manager@roraproduction.com',
                 'access_token' =>  '',
                 'phone_number' =>  '',
                 'address' =>  '',
@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'name'  =>  'customer',
-                'email' =>  'customer@tailor.com',
+                'email' =>  'customer@roraproduction.com',
                 'access_token' =>  '',
                 'phone_number' =>  '',
                 'address' =>  '',
@@ -33,7 +33,7 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'name'  =>  'tailor',
-                'email' =>  'tailor@tailor.com',
+                'email' =>  'tailor@roraproduction.com',
                 'access_token' =>  '',
                 'phone_number' =>  '',
                 'address' =>  '',
