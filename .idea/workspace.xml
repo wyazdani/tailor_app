@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6c02e0be-5a74-4c19-995f-1b733009c5ca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/order_tailor_assigned.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Mail/OrderStatusEmail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/OrderStatusEmail.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +186,8 @@
       <workItem from="1603082992336" duration="309000" />
       <workItem from="1603118391826" duration="528000" />
       <workItem from="1603171943516" duration="168000" />
-      <workItem from="1603626908878" duration="117000" />
+      <workItem from="1603626908878" duration="237000" />
+      <workItem from="1604124260447" duration="107000" />
     </task>
     <servers />
   </component>
@@ -226,10 +227,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1601726865370" />
-    <state x="1914" y="139" width="823" height="763" key="find.popup" timestamp="1603118741733">
-      <screen x="1366" y="0" width="1920" height="1040" />
+    <state x="390" y="97" width="585" height="534" key="find.popup" timestamp="1604124360718">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="97" width="585" height="534" key="find.popup/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1603118406341" />
+    <state x="390" y="97" width="585" height="534" key="find.popup/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1604124360718" />
     <state x="1914" y="139" width="823" height="763" key="find.popup/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1603118741733" />
     <state x="568" y="94" key="ftp.server.browser" timestamp="1600498270829">
       <screen x="0" y="0" width="1366" height="728" />

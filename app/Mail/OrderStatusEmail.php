@@ -28,13 +28,13 @@ class OrderStatusEmail extends Mailable
         $this->user =   $user;
         $this->order =   $order;
         if ($order->order_status=='pending'){
-            $this->title  =   'Order placed';
+            $this->title  =   'RoraProduction';
             $this->view  =   'mail.order_placed';
         }elseif($order->order_status=='processing'){
-            $this->title  =   'Tailor Assigned';
+            $this->title  =   'RoraProduction';
             $this->view  =   'mail.order_tailor_assigned';
         }elseif($order->order_status=='completed'){
-            $this->title  =   'Order Completed';
+            $this->title  =   'RoraProduction';
             $this->view  =   'mail.order_completed';
         }
 
