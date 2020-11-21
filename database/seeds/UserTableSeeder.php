@@ -44,7 +44,11 @@ class UserTableSeeder extends Seeder
 
         foreach ($users as $user)
         {
-            User::create($user);
+            $exist_user =   User::where('email',$user['email'])->first();
+            if (!$exist_user){
+                User::create($user);
+            }
+
         }
     }
 }

@@ -15,7 +15,8 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->double('credit_affiliate','customer_point');
+            $table->double('credit_affiliate');
+            $table->double('customer_point');
         });
     }
 
