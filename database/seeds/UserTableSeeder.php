@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
         $users  =   [
             [
                 'name'  =>  'manager',
-                'email' =>  'manager@roraproduction.com',
+                'email' =>  'zemenfes81@gmail.com',
                 'access_token' =>  '',
                 'phone_number' =>  '',
                 'address' =>  '',
