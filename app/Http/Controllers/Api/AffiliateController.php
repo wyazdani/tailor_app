@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\WithdrawRequestJob;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\Wallet;
 use App\User;
 use Illuminate\Http\Request;
@@ -71,5 +73,59 @@ class AffiliateController extends Controller
         }
 
 
+        $user   =   $request->user();
+        $amount =   $request->amount;
+
+        $this->dispatch(new WithdrawRequestJob($user,$amount));
+
+        return response()->json([
+            'status'     =>  true,
+            'messages'   =>  'Withdraw request sent to Manager'
+        ], 200);
+    }
+
+    public function deductAffiliateBalance(Request $request)
+    {
+        $validation_fields  =   [
+            'amount'            =>  'required',
+            'user_id'           =>  'required|exists:users,id'
+
+        ];
+        $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
+        if($validator->fails()) {
+            $messages   =   [];
+            foreach ($validator->messages()->getMessages() as $key =>   $message){
+                $messages[]    =
+                    $message[0];
+            }
+            $messages =   implode(" ",$messages);
+            return response()->json([
+                'status'     =>  false,
+                'messages'   =>  $messages
+            ], 200);
+        }
+        $user_id    =   $request->user_id;
+        $amount    =   $request->amount;
+        $wallet =   Wallet::where('user_id',$user_id)->orderBy('id','DESC')->first();
+        if (!empty($wallet) && $wallet->balance>=$amount)
+        {
+            $data   =   [
+                'amount'            =>  $amount,
+                'type'              =>  'credit',
+                'description'       =>  $amount.' Credits deducted by RoraProduction',
+            ];
+            Wallet::debit($user_id,$data);
+        }else{
+            return response()->json([
+                'status'    =>  true,
+                'messages'  =>  [
+                    'Invalid Amount entered'
+                ]
+            ]);
+        }
+        return response()->json([
+            'status'    =>  true,
+            'messages'  =>  'Amount Deducted Successfully'
+        ]);
     }
 }

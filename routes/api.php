@@ -34,4 +34,6 @@ Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
     Route::post('my-sizes', 'Api\SizeController@index'); /*Sizes Listing*/
     Route::post('store-my-size', 'Api\SizeController@store'); /*Sizes Store*/
     Route::post('affiliates', 'Api\AffiliateController@index'); /*Affiliates Listing*/
+    Route::post('affiliate-withdraw-request', 'Api\AffiliateController@withdrawRequest'); /*Affiliates Withdraw Request*/
+    Route::post('deduct-affiliate-amount', 'Api\AffiliateController@deductAffiliateBalance'); /*Affiliates Deduct Amount*/
 });
