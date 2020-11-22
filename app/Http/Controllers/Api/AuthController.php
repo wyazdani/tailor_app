@@ -65,7 +65,7 @@ class AuthController extends Controller
             'name'    => 'required|max:255',
             'phone_number'  =>   'required|max:45|unique:users',
             'password'     => 'required|string|min:6|max:90',
-            'type'     => 'required|in:customer,tailor',
+            'type'     => 'required|in:customer,tailor,affiliate',
         ];
         $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
         if($validator->fails()) {
@@ -80,10 +80,7 @@ class AuthController extends Controller
                 'messages'   =>  $messages
             ], 200);
         }
-        $role   =   'customer';
-        if ($request->type==='tailor'){
-            $role   =   'tailor';
-        }
+        $role   =   $request->type;
         $user = User::create([
             'name'  =>  $request->name,
             'email'  =>  $request->email,
@@ -98,6 +95,9 @@ class AuthController extends Controller
             'id'=>$user->id,
             'updated_at'=>$user->updated_at),$key);
         $user->access_token  =   $token;
+        if ($user->role=='affiliate'){
+            $user->affiliate_code   =   User::CreateRandomAffiliateCode();
+        }
         $user->save();
         $data_user =   UserHelper::userObject($user->id);
         $data_user['status']  =   true;

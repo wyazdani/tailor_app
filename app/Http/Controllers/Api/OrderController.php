@@ -190,10 +190,12 @@ class OrderController extends Controller
              'user_id' =>  $user->id,
              'tailor_id' =>  0,
              'size_id' =>  $size->id,
+             'affiliate_code' =>  $request->affiliate_code,
              'comments' =>  $request->comments,
              'image_url' =>  $image,
              'order_status' =>  'pending',
              'address' =>  $request->address,
+
         ]);
 
         dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));

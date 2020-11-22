@@ -17,11 +17,8 @@ class ApiMiddleware
      */
     public function handle($request, Closure $next)
     {
-
-
         $key        =   env('JWT_KEY');
         $authorization  =   $request->header('Authorization');
-
         if(isset($authorization) && !empty($authorization)) {
             $access_token = explode('Bearer ', $authorization);
             if (count($access_token) ==2 && $access_token[0] =='')
@@ -29,7 +26,6 @@ class ApiMiddleware
                 try{
                     $token =    $access_token[1];
                     $decoded = JWT::decode($token, $key, array('HS256'));
-
                     if($decoded){
                         $user = User::where('access_token',$token)->first();
                         if ($user){
@@ -44,14 +40,12 @@ class ApiMiddleware
                                 'messages'   => "Unauthenticated."
                             ],401);
                         }
-
                     }else{
                         return response()->json([
                             'status'    => false,
                             'messages'   => "Unauthenticated."
                         ],401);
                     }
-
                 }
                 catch(\Exception $ex){
                     return response()->json([
@@ -59,7 +53,6 @@ class ApiMiddleware
                         'messages'   => "Unauthenticated."
                     ],401);
                 }
-
             }
             else{
                 return response()->json([
