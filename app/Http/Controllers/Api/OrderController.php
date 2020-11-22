@@ -7,7 +7,9 @@ use App\Jobs\InformTailorJob;
 use App\Jobs\OrderDeliveryDateAssigned;
 use App\Jobs\OrderStatusJob;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\Size;
+use App\Models\Wallet;
 use App\Traits\UploadImage;
 use App\User;
 use Illuminate\Http\Request;
@@ -25,17 +27,19 @@ class OrderController extends Controller
             ->join(get_table_name(Size::class).' as s','s.id','o.size_id')
             ->leftJoin(get_table_name(User::class).' as t','t.id','o.tailor_id')
             ->select('o.id as order_id','o.order_no','u.name as customer_name','t.name as tailor_name','o.order_status','o.created_at','o.tailor_id','o.image_url','o.comments','o.delivery_date','u.phone_number','o.address','o.tracking_number','o.tailor_image','o.initial_remarks','o.complete_remarks','s.shoulder_to_seam','s.shoulder_to_hips','s.shoulder_to_floor','s.arm_length','s.bicep','s.wrist','s.waist','s.lower_waist','s.waist_to_floor',
-                's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender','s.id as size_id'
+                's.hips','s.max_thigh','s.calf','s.ankle','s.chest','s.navel_to_floor','s.name as size_name','s.gender','s.id as size_id','o.affiliate_code'
             )
             ->orderBy('o.id','DESC');
         if($user->role=='customer'){
             $orders =   $orders->where('u.id',$user->id);
         }elseif($user->role=='tailor'){
             $orders =   $orders->where('t.id',$user->id);
+        }elseif ($user->role=='affiliate'){
+            $orders =   $orders->where('o.affiliate_code',$user->affiliate_code);
         }
 
         $orders =   $orders->paginate(20);
-        if (!empty($orders)){
+        if (!empty($orders) && count($orders)>0){
             foreach ($orders as $order)
             {
                 $data['orders'][]   =   [
@@ -74,6 +78,7 @@ class OrderController extends Controller
                     'tailor_image'  =>    !empty($order->tailor_image)?url($order->tailor_image):"",
                     'initial_remarks'  =>    !empty($order->initial_remarks)?$order->initial_remarks:"",
                     'complete_remarks'  =>    !empty($order->complete_remarks)?$order->complete_remarks:"",
+                    'affiliate_code'  =>    !empty($order->affiliate_code)?$order->affiliate_code:"",
                 ];
 
             }
@@ -119,6 +124,7 @@ class OrderController extends Controller
             'navel_to_floor'        => 'required|numeric',
             'size_id'        => 'required_if:size_type,preset',
             'size_type'        => 'required|in:custom,preset',
+            'affiliate_code'         => 'exists:users,affiliate_code'
         ];
         $validator     =  $this->getValidationFactory()->make($request->all(),$validation_fields);
         if($validator->fails()) {
@@ -395,7 +401,6 @@ class OrderController extends Controller
         }
 
         $order  =   Order::find($request->order_id);
-
         $image  =   $this->uploadImage($request->tailor_image);
         $order->update([
             'order_status'  =>  'completed',
@@ -405,6 +410,21 @@ class OrderController extends Controller
         ]);
 
         $user   =   User::find($order->user_id);
+        $affiliate_user =   User::where('affiliate_code',$order->affiliate_code)->first();
+        if ($affiliate_user){
+            $affiliate_data   =   [
+                'amount'            =>  Setting::find(1)->credit_affiliate,
+                'type'              =>  'credit',
+                'description'       =>  'Order No. '.$order->order_no. 'Completed Credits Received',
+            ];
+            Wallet::credit($affiliate_user->id,$affiliate_data);
+        }
+        $data   =   [
+            'amount'            =>  Setting::find(1)->customer_point,
+            'type'              =>  'point',
+            'description'       =>  'Order No. '.$order->order_no. ' Completed Points Received',
+        ];
+        Wallet::credit($user->id,$data);
         dispatch(new OrderStatusJob($user,$order));
 
         return response()->json([

@@ -12,11 +12,11 @@ class Wallet extends Model
         $user_id        =   $this->user_id;
         $wallet         =   self::where('user_id', $user_id)->orderBy('id','DESC')->first();
         $total_balance  =   !empty($wallet)?$wallet->balance:0;
-        if($this->wallet_type == 'credit'){
+        if($this->transaction_type == 'credit'){
             $credit         =   $this->credit;
             $total_balance  +=  $credit;
         }
-        else if($this->wallet_type == 'debit'){
+        else if($this->transaction_type == 'debit'){
             $debit          =   $this->debit;
             $total_balance  -=  $debit;
         }

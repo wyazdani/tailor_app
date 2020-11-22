@@ -28,7 +28,7 @@ class UserController extends Controller
         }
         $customers  =   User::where('role',$request->role)->paginate(20);
 
-        if (!empty($customers)){
+        if (!empty($customers) && count($customers)>0){
             foreach ($customers as $customer)
             {
                 $data['customers'][] =   [

@@ -33,4 +33,5 @@ Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
     Route::post('order-completed', 'Api\OrderController@order_complete'); /*Order Status Complete */
     Route::post('my-sizes', 'Api\SizeController@index'); /*Sizes Listing*/
     Route::post('store-my-size', 'Api\SizeController@store'); /*Sizes Store*/
+    Route::post('affiliates', 'Api\AffiliateController@index'); /*Affiliates Listing*/
 });
