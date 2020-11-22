@@ -36,4 +36,5 @@ Route::group(['prefix'  =>  'v1','middleware'=>['authApi']],function (){
     Route::post('affiliates', 'Api\AffiliateController@index'); /*Affiliates Listing*/
     Route::post('affiliate-withdraw-request', 'Api\AffiliateController@withdrawRequest'); /*Affiliates Withdraw Request*/
     Route::post('deduct-affiliate-amount', 'Api\AffiliateController@deductAffiliateBalance'); /*Affiliates Deduct Amount*/
+    Route::post('my-wallet', 'Api\WalletController@myWallet'); /*My Wallet*/
 });
