@@ -30,7 +30,7 @@ class WithdrawRequestEmail extends Mailable
      */
     public function build()
     {
-        return $this->to('waqaryazdani2@gmail.com')
+        return $this->to($this->user->email)
             ->subject('Withdraw Request')
             ->view('mail.withdraw_request');
     }
