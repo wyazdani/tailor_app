@@ -196,7 +196,7 @@ class OrderController extends Controller
              'user_id' =>  $user->id,
              'tailor_id' =>  0,
              'size_id' =>  $size->id,
-             'affiliate_code' =>  $request->affiliate_code,
+             'affiliate_code' =>  !empty($request->affiliate_code)?$request->affiliate_code:'',
              'comments' =>  $request->comments,
              'image_url' =>  $image,
              'order_status' =>  'pending',
@@ -207,7 +207,7 @@ class OrderController extends Controller
         dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
         $data_user['status']  =   true;
         $data_user['messages']  =   'Order Placed Successfully';
-        return response()->json($data_user, 200);
+        return response()->json($data_user);
     }
     public function edit(Request $request)
     {
