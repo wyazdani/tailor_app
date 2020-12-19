@@ -96,7 +96,7 @@ class AuthController extends Controller
             'updated_at'=>$user->updated_at),$key);
         $user->access_token  =   $token;
         if ($user->role=='affiliate'){
-            $user->affiliate_code   =   User::CreateRandomAffiliateCode();
+            $user->affiliate_code   =   $user->phone_number;
         }
         $user->save();
         $data_user =   UserHelper::userObject($user->id);
