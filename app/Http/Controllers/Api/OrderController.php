@@ -304,29 +304,55 @@ class OrderController extends Controller
             'image_url'  =>  $image,
         ]);
         $size   =   Size::find($request->size_id);
-        $size->update([
-            'name'        => $request->size_name,
-            'gender'        => $request->gender,
-            'shoulder_to_seam'        => $request->shoulder_to_seam,
-            'shoulder_to_hips'        => $request->shoulder_to_hips,
-            'shoulder_to_floor'        => $request->shoulder_to_floor,
-            'arm_length'        => $request->arm_length,
-            'bicep'        => $request->bicep,
-            'wrist'        => $request->wrist,
-            'waist'        => $request->waist,
-            'lower_waist'        => $request->lower_waist,
-            'waist_to_floor'        => $request->waist_to_floor,
-            'hips'        => $request->hips,
-            'max_thigh'        => $request->max_thigh,
-            'calf'        => $request->calf,
-            'ankle'        => $request->ankle,
-            'chest'        => $request->chest,
-            'navel_to_floor'        => $request->navel_to_floor,
-        ]);
+        if (!empty($size)){
+            $size->update([
+                'name'        => $request->size_name,
+                'gender'        => $request->gender,
+                'shoulder_to_seam'        => $request->shoulder_to_seam,
+                'shoulder_to_hips'        => $request->shoulder_to_hips,
+                'shoulder_to_floor'        => $request->shoulder_to_floor,
+                'arm_length'        => $request->arm_length,
+                'bicep'        => $request->bicep,
+                'wrist'        => $request->wrist,
+                'waist'        => $request->waist,
+                'lower_waist'        => $request->lower_waist,
+                'waist_to_floor'        => $request->waist_to_floor,
+                'hips'        => $request->hips,
+                'max_thigh'        => $request->max_thigh,
+                'calf'        => $request->calf,
+                'ankle'        => $request->ankle,
+                'chest'        => $request->chest,
+                'navel_to_floor'        => $request->navel_to_floor,
+            ]);
+        }else{
+            Size::create([
+                'user_id'        => $order->user_id,
+                'name'        => $request->size_name,
+                'gender'        => $request->gender,
+                'shoulder_to_seam'        => $request->shoulder_to_seam,
+                'shoulder_to_hips'        => $request->shoulder_to_hips,
+                'shoulder_to_floor'        => $request->shoulder_to_floor,
+                'arm_length'        => $request->arm_length,
+                'bicep'        => $request->bicep,
+                'wrist'        => $request->wrist,
+                'waist'        => $request->waist,
+                'lower_waist'        => $request->lower_waist,
+                'waist_to_floor'        => $request->waist_to_floor,
+                'hips'        => $request->hips,
+                'max_thigh'        => $request->max_thigh,
+                'calf'        => $request->calf,
+                'ankle'        => $request->ankle,
+                'chest'        => $request->chest,
+                'navel_to_floor'        => $request->navel_to_floor,
+            ]);
+        }
+
         $user   =   User::find($order->user_id);
         $tailor   =   User::find($order->tailor_id);
         dispatch(new OrderStatusJob($user,$order))->delay(now()->addSeconds(30));
-        dispatch(new InformTailorJob($tailor,$order))->delay(now()->addSeconds(30));
+        if (!empty($tailor)){
+            dispatch(new InformTailorJob($tailor,$order))->delay(now()->addSeconds(30));
+        }
         return response()->json([
             'status'     =>  true,
             'messages'   =>  'Order updated Successfully'
