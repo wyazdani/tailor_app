@@ -296,6 +296,17 @@ class OrderController extends Controller
             $this->deleteOne($order->image_url);
             $image = $this->uploadImage($request->image_url);
         }
+        if (!empty($request->tailor_id) && empty($order->tailor_id)){
+            $affiliate_user =   User::where('affiliate_code',$order->affiliate_code)->first();
+            if ($affiliate_user){
+                $affiliate_data   =   [
+                    'amount'            =>  Setting::find(1)->credit_affiliate,
+                    'type'              =>  'credit',
+                    'description'       =>  'Order No. '.$order->order_no. 'Completed Credits Received',
+                ];
+                Wallet::credit($affiliate_user->id,$affiliate_data);
+            }
+        }
         $order->update([
             'tailor_id' =>  $request->tailor_id,
             'order_status'  =>  'processing',
@@ -303,6 +314,7 @@ class OrderController extends Controller
             'comments'  =>  $request->comments,
             'image_url'  =>  $image,
         ]);
+
         $size   =   Size::find($request->size_id);
         if (!empty($size)){
             $size->update([
@@ -436,15 +448,7 @@ class OrderController extends Controller
         ]);
 
         $user   =   User::find($order->user_id);
-        $affiliate_user =   User::where('affiliate_code',$order->affiliate_code)->first();
-        if ($affiliate_user){
-            $affiliate_data   =   [
-                'amount'            =>  Setting::find(1)->credit_affiliate,
-                'type'              =>  'credit',
-                'description'       =>  'Order No. '.$order->order_no. 'Completed Credits Received',
-            ];
-            Wallet::credit($affiliate_user->id,$affiliate_data);
-        }
+
         $data   =   [
             'amount'            =>  Setting::find(1)->customer_point,
             'type'              =>  'point',

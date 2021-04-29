@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="b053c1c6-f78c-4ce2-a1a7-fce83818975b" name="tailor" url="http://64.225.76.136">
-        <fileTransfer accessType="SFTP" host="46.101.189.171" port="22" sshConfigId="2f364e1c-0040-4916-9909-c9d22e76afa1" sshConfig="tailor">
+        <fileTransfer accessType="SFTP" host="api.roraproduction.com" port="22" sshConfigId="2f364e1c-0040-4916-9909-c9d22e76afa1" sshConfig="tailor">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
